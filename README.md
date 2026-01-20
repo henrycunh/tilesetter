@@ -25,6 +25,12 @@ This produces:
 - `sliced_tilesets/tileset_1bit_16x16/tile_*.png`
 - `sliced_tilesets/tileset_1bit_16x16/manifest.json` (rect + filename per tile)
 
+2.5) Generate a labeled overview (recommended before organizing):
+
+```bash
+python3 scripts/overview_tileset.py --sliced-dir sliced_tilesets/tileset_1bit_16x16 --out docs/tileset_1bit_16x16_overview.png --scale 8
+```
+
 3) Create a grouping/naming config (manual step).
    - `configs/tileset_1bit_16x16.json` defines:
      - directories (each directory = one object/set, like `objects/archway`)
@@ -77,6 +83,12 @@ Guidelines:
 - Group IDs become folders; use `/` to create hierarchy (example: `terrain/grass`).
 - Tile names become filenames; use stable `snake_case` names.
 - Prefer “what it is” over “where it was on the sheet”.
+
+Recommended: generate a contact sheet to guide naming and grouping:
+
+```bash
+python3 scripts/overview_tileset.py --sliced-dir sliced_tilesets/<tileset_stem>_16x16 --out docs/<tileset_id>_overview.png --scale 8
+```
 
 ### 5) Write a config in `configs/`
 

@@ -23,3 +23,11 @@ A skill is a set of local instructions to follow that is stored in a `SKILL.md` 
 - Safety and fallback: If a skill can't be applied cleanly (missing files, unclear instructions), state the issue, pick the next-best approach, and continue.
 </INSTRUCTIONS>
 
+## tilesetter workflow (agent)
+
+When organizing a new tileset in this repo, follow this order:
+
+1) Slice the source PNG with `scripts/slice_tileset.py` and always emit `manifest.json`.
+2) Generate a labeled overview/contact sheet with `scripts/overview_tileset.py` (use `--scale 8` or higher).
+3) Create a config under `configs/` with one directory per object/set; every tile in that directory must have `pos: [x,y]` so filenames become `<base_name>_XX_YY.png`.
+4) Run `scripts/organize_tileset.py` and iterate on the config until `assembled.png` previews (layout sets) look correct and `tileset.json` lists tiles in `(y,x)` order.
