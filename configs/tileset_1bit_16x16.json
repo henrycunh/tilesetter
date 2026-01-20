@@ -1,0 +1,128 @@
+{
+  "tileset_id": "tileset_1bit_16x16",
+  "source_image": "raw_tilesets/tileset_1bit.png",
+  "sliced_dir": "sliced_tilesets/tileset_1bit_16x16",
+  "tile_size": [16, 16],
+  "groups": [
+    {
+      "id": "terrain/grass_patch",
+      "connect": { "type": "layout" },
+      "tiles": [
+        { "index": 8, "name": "grass_patch_x0_y0", "pos": [0, 0] },
+        { "index": 9, "name": "grass_patch_x1_y0", "pos": [1, 0] },
+        { "index": 10, "name": "grass_patch_x2_y0", "pos": [2, 0] },
+        { "index": 16, "name": "grass_patch_x0_y1", "pos": [0, 1] },
+        { "index": 17, "name": "grass_patch_x1_y1", "pos": [1, 1] },
+        { "index": 18, "name": "grass_patch_x2_y1", "pos": [2, 1] },
+        { "index": 24, "name": "grass_patch_x0_y2", "pos": [0, 2] },
+        { "index": 25, "name": "grass_patch_x1_y2", "pos": [1, 2] },
+        { "index": 26, "name": "grass_patch_x2_y2", "pos": [2, 2] },
+        { "index": 32, "name": "grass_patch_x0_y3", "pos": [0, 3] },
+        { "index": 33, "name": "grass_patch_x1_y3", "pos": [1, 3] },
+        { "index": 40, "name": "grass_patch_x0_y4", "pos": [0, 4] },
+        { "index": 41, "name": "grass_patch_x1_y4", "pos": [1, 4] },
+        { "index": 42, "name": "grass_patch_x2_y4", "pos": [2, 4] }
+      ]
+    },
+    {
+      "id": "terrain/cliff",
+      "connect": { "type": "layout" },
+      "tiles": [
+        { "index": 29, "name": "cliff_x0_y0", "pos": [0, 0] },
+        { "index": 30, "name": "cliff_x1_y0", "pos": [1, 0] },
+        { "index": 31, "name": "cliff_x2_y0", "pos": [2, 0] },
+        { "index": 37, "name": "cliff_x0_y1", "pos": [0, 1] },
+        { "index": 38, "name": "cliff_x1_y1", "pos": [1, 1] },
+        { "index": 39, "name": "cliff_x2_y1", "pos": [2, 1] }
+      ]
+    },
+    {
+      "id": "terrain/ground",
+      "tiles": [
+        { "index": 2, "name": "ground_checkered" },
+        { "index": 6, "name": "ground_speckles" },
+        { "index": 34, "name": "ground_slope" },
+        { "index": 35, "name": "ground_border" },
+        { "index": 36, "name": "rocks_scatter" }
+      ]
+    },
+    {
+      "id": "walls/brick",
+      "connect": { "type": "edge_match", "top_k": 5 },
+      "tiles": [
+        { "index": 1, "name": "brick_light" },
+        { "index": 3, "name": "brick_striped" },
+        { "index": 5, "name": "brick_dark" },
+        { "index": 11, "name": "brick_chunky" },
+        { "index": 51, "name": "brick_trim" },
+        { "index": 61, "name": "brick_window" },
+        { "index": 62, "name": "brick_window_blank" }
+      ]
+    },
+    {
+      "id": "structures/fence",
+      "connect": { "type": "edge_match", "top_k": 5 },
+      "tiles": [
+        { "index": 19, "name": "fence_left" },
+        { "index": 20, "name": "fence_right" }
+      ]
+    },
+    {
+      "id": "objects/trees",
+      "tiles": [
+        { "index": 7, "name": "tree_canopy" },
+        { "index": 15, "name": "palm_tree" },
+        { "index": 21, "name": "dead_tree" },
+        { "index": 28, "name": "pine_tree" }
+      ]
+    },
+    {
+      "id": "objects/graves",
+      "tiles": [
+        { "index": 22, "name": "tombstone" },
+        { "index": 23, "name": "cross" }
+      ]
+    },
+    {
+      "id": "objects/props",
+      "tiles": [
+        { "index": 12, "name": "ruins_left" },
+        { "index": 13, "name": "ruins_right" },
+        { "index": 14, "name": "signpost" },
+        { "index": 43, "name": "archway" },
+        { "index": 44, "name": "monster" },
+        { "index": 45, "name": "cat" },
+        { "index": 46, "name": "pedestal_left" },
+        { "index": 47, "name": "pedestal_right" },
+        { "index": 48, "name": "cactus_small" },
+        { "index": 56, "name": "cactus_tall" },
+        { "index": 57, "name": "axe" },
+        { "index": 58, "name": "boulder" },
+        { "index": 59, "name": "crate" },
+        { "index": 60, "name": "barrel" }
+      ]
+    },
+    {
+      "id": "structures/building",
+      "connect": { "type": "layout" },
+      "tiles": [
+        { "index": 52, "name": "door", "pos": [0, 0] },
+        { "index": 53, "name": "ladder", "pos": [1, 0] },
+        { "index": 54, "name": "stairs_left", "pos": [2, 0] },
+        { "index": 55, "name": "stairs_right", "pos": [3, 0] }
+      ]
+    },
+    {
+      "id": "special",
+      "tiles": [
+        { "index": 0, "name": "blank_corners" },
+        { "index": 4, "name": "solid_black_notched" },
+        { "index": 27, "name": "solid_black" },
+        { "index": 49, "name": "lock" },
+        { "index": 50, "name": "solid_black_variant" },
+        { "index": 63, "name": "blank" }
+      ]
+    }
+  ]
+}
+
