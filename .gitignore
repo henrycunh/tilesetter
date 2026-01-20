@@ -6,3 +6,6 @@ __pycache__/
 sliced_tilesets/
 organized_tilesets/
 
+# Debug artifacts
+raw_tilesets/*_grid*_x*.png
+raw_tilesets/crop_*.png

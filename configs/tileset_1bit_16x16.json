@@ -3,126 +3,226 @@
   "source_image": "raw_tilesets/tileset_1bit.png",
   "sliced_dir": "sliced_tilesets/tileset_1bit_16x16",
   "tile_size": [16, 16],
-  "groups": [
+  "directories": [
     {
       "id": "terrain/grass_patch",
+      "base_name": "grass_patch",
       "connect": { "type": "layout" },
       "tiles": [
-        { "index": 8, "name": "grass_patch_x0_y0", "pos": [0, 0] },
-        { "index": 9, "name": "grass_patch_x1_y0", "pos": [1, 0] },
-        { "index": 10, "name": "grass_patch_x2_y0", "pos": [2, 0] },
-        { "index": 16, "name": "grass_patch_x0_y1", "pos": [0, 1] },
-        { "index": 17, "name": "grass_patch_x1_y1", "pos": [1, 1] },
-        { "index": 18, "name": "grass_patch_x2_y1", "pos": [2, 1] },
-        { "index": 24, "name": "grass_patch_x0_y2", "pos": [0, 2] },
-        { "index": 25, "name": "grass_patch_x1_y2", "pos": [1, 2] },
-        { "index": 26, "name": "grass_patch_x2_y2", "pos": [2, 2] },
-        { "index": 32, "name": "grass_patch_x0_y3", "pos": [0, 3] },
-        { "index": 33, "name": "grass_patch_x1_y3", "pos": [1, 3] },
-        { "index": 40, "name": "grass_patch_x0_y4", "pos": [0, 4] },
-        { "index": 41, "name": "grass_patch_x1_y4", "pos": [1, 4] },
-        { "index": 42, "name": "grass_patch_x2_y4", "pos": [2, 4] }
+        { "index": 8, "pos": [0, 0] },
+        { "index": 9, "pos": [1, 0] },
+        { "index": 10, "pos": [2, 0] },
+        { "index": 16, "pos": [0, 1] },
+        { "index": 17, "pos": [1, 1] },
+        { "index": 18, "pos": [2, 1] },
+        { "index": 24, "pos": [0, 2] },
+        { "index": 25, "pos": [1, 2] },
+        { "index": 26, "pos": [2, 2] },
+        { "index": 32, "pos": [0, 3] },
+        { "index": 33, "pos": [1, 3] },
+        { "index": 40, "pos": [0, 4] },
+        { "index": 41, "pos": [1, 4] },
+        { "index": 42, "pos": [2, 4] }
       ]
     },
     {
       "id": "terrain/cliff",
+      "base_name": "cliff",
       "connect": { "type": "layout" },
       "tiles": [
-        { "index": 29, "name": "cliff_x0_y0", "pos": [0, 0] },
-        { "index": 30, "name": "cliff_x1_y0", "pos": [1, 0] },
-        { "index": 31, "name": "cliff_x2_y0", "pos": [2, 0] },
-        { "index": 37, "name": "cliff_x0_y1", "pos": [0, 1] },
-        { "index": 38, "name": "cliff_x1_y1", "pos": [1, 1] },
-        { "index": 39, "name": "cliff_x2_y1", "pos": [2, 1] }
+        { "index": 29, "pos": [0, 0] },
+        { "index": 30, "pos": [1, 0] },
+        { "index": 31, "pos": [2, 0] },
+        { "index": 37, "pos": [0, 1] },
+        { "index": 38, "pos": [1, 1] },
+        { "index": 39, "pos": [2, 1] }
       ]
     },
     {
       "id": "terrain/ground",
+      "base_name": "ground",
       "tiles": [
-        { "index": 2, "name": "ground_checkered" },
-        { "index": 6, "name": "ground_speckles" },
-        { "index": 34, "name": "ground_slope" },
-        { "index": 35, "name": "ground_border" },
-        { "index": 36, "name": "rocks_scatter" }
+        { "index": 2, "pos": [0, 0] },
+        { "index": 6, "pos": [1, 0] },
+        { "index": 34, "pos": [2, 0] },
+        { "index": 35, "pos": [3, 0] },
+        { "index": 36, "pos": [4, 0] }
       ]
     },
     {
       "id": "walls/brick",
+      "base_name": "brick",
       "connect": { "type": "edge_match", "top_k": 5 },
       "tiles": [
-        { "index": 1, "name": "brick_light" },
-        { "index": 3, "name": "brick_striped" },
-        { "index": 5, "name": "brick_dark" },
-        { "index": 11, "name": "brick_chunky" },
-        { "index": 51, "name": "brick_trim" },
-        { "index": 61, "name": "brick_window" },
-        { "index": 62, "name": "brick_window_blank" }
+        { "index": 1, "pos": [0, 0] },
+        { "index": 3, "pos": [1, 0] },
+        { "index": 5, "pos": [2, 0] },
+        { "index": 11, "pos": [3, 0] },
+        { "index": 51, "pos": [4, 0] },
+        { "index": 61, "pos": [5, 0] },
+        { "index": 62, "pos": [6, 0] }
       ]
     },
     {
       "id": "structures/fence",
+      "base_name": "fence",
       "connect": { "type": "edge_match", "top_k": 5 },
       "tiles": [
-        { "index": 19, "name": "fence_left" },
-        { "index": 20, "name": "fence_right" }
+        { "index": 19, "pos": [0, 0] },
+        { "index": 20, "pos": [1, 0] }
       ]
     },
     {
-      "id": "objects/trees",
-      "tiles": [
-        { "index": 7, "name": "tree_canopy" },
-        { "index": 15, "name": "palm_tree" },
-        { "index": 21, "name": "dead_tree" },
-        { "index": 28, "name": "pine_tree" }
-      ]
+      "id": "objects/tree_canopy",
+      "base_name": "tree_canopy",
+      "tiles": [{ "index": 7, "pos": [0, 0] }]
     },
     {
-      "id": "objects/graves",
-      "tiles": [
-        { "index": 22, "name": "tombstone" },
-        { "index": 23, "name": "cross" }
-      ]
+      "id": "objects/palm_tree",
+      "base_name": "palm_tree",
+      "tiles": [{ "index": 15, "pos": [0, 0] }]
     },
     {
-      "id": "objects/props",
-      "tiles": [
-        { "index": 12, "name": "ruins_left" },
-        { "index": 13, "name": "ruins_right" },
-        { "index": 14, "name": "signpost" },
-        { "index": 43, "name": "archway" },
-        { "index": 44, "name": "monster" },
-        { "index": 45, "name": "cat" },
-        { "index": 46, "name": "pedestal_left" },
-        { "index": 47, "name": "pedestal_right" },
-        { "index": 48, "name": "cactus_small" },
-        { "index": 56, "name": "cactus_tall" },
-        { "index": 57, "name": "axe" },
-        { "index": 58, "name": "boulder" },
-        { "index": 59, "name": "crate" },
-        { "index": 60, "name": "barrel" }
-      ]
+      "id": "objects/dead_tree",
+      "base_name": "dead_tree",
+      "tiles": [{ "index": 21, "pos": [0, 0] }]
     },
     {
-      "id": "structures/building",
+      "id": "objects/pine_tree",
+      "base_name": "pine_tree",
+      "tiles": [{ "index": 28, "pos": [0, 0] }]
+    },
+    {
+      "id": "objects/tombstone",
+      "base_name": "tombstone",
+      "tiles": [{ "index": 22, "pos": [0, 0] }]
+    },
+    {
+      "id": "objects/cross",
+      "base_name": "cross",
+      "tiles": [{ "index": 23, "pos": [0, 0] }]
+    },
+    {
+      "id": "objects/ruins",
+      "base_name": "ruins",
       "connect": { "type": "layout" },
       "tiles": [
-        { "index": 52, "name": "door", "pos": [0, 0] },
-        { "index": 53, "name": "ladder", "pos": [1, 0] },
-        { "index": 54, "name": "stairs_left", "pos": [2, 0] },
-        { "index": 55, "name": "stairs_right", "pos": [3, 0] }
+        { "index": 12, "pos": [0, 0] },
+        { "index": 13, "pos": [1, 0] }
       ]
     },
     {
-      "id": "special",
+      "id": "objects/signpost",
+      "base_name": "signpost",
+      "tiles": [{ "index": 14, "pos": [0, 0] }]
+    },
+    {
+      "id": "objects/archway",
+      "base_name": "archway",
+      "connect": { "type": "layout" },
       "tiles": [
-        { "index": 0, "name": "blank_corners" },
-        { "index": 4, "name": "solid_black_notched" },
-        { "index": 27, "name": "solid_black" },
-        { "index": 49, "name": "lock" },
-        { "index": 50, "name": "solid_black_variant" },
-        { "index": 63, "name": "blank" }
+        { "index": 42, "pos": [0, 0] },
+        { "index": 43, "pos": [1, 0] }
       ]
+    },
+    {
+      "id": "objects/monster",
+      "base_name": "monster",
+      "tiles": [{ "index": 44, "pos": [0, 0] }]
+    },
+    {
+      "id": "objects/cat",
+      "base_name": "cat",
+      "tiles": [{ "index": 45, "pos": [0, 0] }]
+    },
+    {
+      "id": "objects/pedestal_left",
+      "base_name": "pedestal_left",
+      "tiles": [{ "index": 46, "pos": [0, 0] }]
+    },
+    {
+      "id": "objects/pedestal_right",
+      "base_name": "pedestal_right",
+      "tiles": [{ "index": 47, "pos": [0, 0] }]
+    },
+    {
+      "id": "objects/cactus_small",
+      "base_name": "cactus_small",
+      "tiles": [{ "index": 48, "pos": [0, 0] }]
+    },
+    {
+      "id": "objects/cactus_tall",
+      "base_name": "cactus_tall",
+      "tiles": [{ "index": 56, "pos": [0, 0] }]
+    },
+    {
+      "id": "objects/axe",
+      "base_name": "axe",
+      "tiles": [{ "index": 57, "pos": [0, 0] }]
+    },
+    {
+      "id": "objects/boulder",
+      "base_name": "boulder",
+      "tiles": [{ "index": 58, "pos": [0, 0] }]
+    },
+    {
+      "id": "objects/crate",
+      "base_name": "crate",
+      "tiles": [{ "index": 59, "pos": [0, 0] }]
+    },
+    {
+      "id": "objects/barrel",
+      "base_name": "barrel",
+      "tiles": [{ "index": 60, "pos": [0, 0] }]
+    },
+    {
+      "id": "structures/door",
+      "base_name": "door",
+      "tiles": [{ "index": 52, "pos": [0, 0] }]
+    },
+    {
+      "id": "structures/ladder",
+      "base_name": "ladder",
+      "tiles": [{ "index": 53, "pos": [0, 0] }]
+    },
+    {
+      "id": "structures/stairs",
+      "base_name": "stairs",
+      "connect": { "type": "layout" },
+      "tiles": [
+        { "index": 54, "pos": [0, 0] },
+        { "index": 55, "pos": [1, 0] }
+      ]
+    },
+    {
+      "id": "special/blank_corners",
+      "base_name": "blank_corners",
+      "tiles": [{ "index": 0, "pos": [0, 0] }]
+    },
+    {
+      "id": "special/solid_black_notched",
+      "base_name": "solid_black_notched",
+      "tiles": [{ "index": 4, "pos": [0, 0] }]
+    },
+    {
+      "id": "special/solid_black",
+      "base_name": "solid_black",
+      "tiles": [{ "index": 27, "pos": [0, 0] }]
+    },
+    {
+      "id": "special/lock",
+      "base_name": "lock",
+      "tiles": [{ "index": 49, "pos": [0, 0] }]
+    },
+    {
+      "id": "special/solid_black_variant",
+      "base_name": "solid_black_variant",
+      "tiles": [{ "index": 50, "pos": [0, 0] }]
+    },
+    {
+      "id": "special/blank",
+      "base_name": "blank",
+      "tiles": [{ "index": 63, "pos": [0, 0] }]
     }
   ]
 }
-

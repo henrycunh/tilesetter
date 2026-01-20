@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import re
 import shutil
 from dataclasses import dataclass
 from pathlib import Path
@@ -31,7 +32,7 @@ def _parse_args() -> argparse.Namespace:
         "--config",
         type=Path,
         default=Path("configs/tileset_1bit_16x16.json"),
-        help="Config JSON defining groups and tile names",
+        help="Config JSON defining directories (objects) and tile positions",
     )
     p.add_argument(
         "--out",
@@ -71,11 +72,27 @@ def _copy_tile(src_dir: Path, tile: TileInfo, dst_path: Path) -> None:
     shutil.copy2(src_dir / tile.file, dst_path)
 
 
+def _sanitize_base_name(name: str) -> str:
+    name = name.strip().lower()
+    name = re.sub(r"[^a-z0-9]+", "_", name)
+    name = re.sub(r"_+", "_", name).strip("_")
+    return name or "tile"
+
+
+def _default_base_name_from_group_id(group_id: str) -> str:
+    return _sanitize_base_name(group_id.split("/")[-1])
+
+
+def _tile_filename(base_name: str, x: int, y: int) -> str:
+    return f"{base_name}_{x:02d}_{y:02d}.png"
+
+
 def _assemble_layout(
     *,
     src_dir: Path,
     tile_lookup: dict[int, TileInfo],
     tile_size: tuple[int, int],
+    base_name: str,
     entries: list[dict[str, Any]],
     out_path: Path,
 ) -> dict[str, Any]:
@@ -93,11 +110,19 @@ def _assemble_layout(
 
     for e in entries:
         idx = int(e["index"])
-        pos = (int(e["pos"][0]) - min_x, int(e["pos"][1]) - min_y)
+        src_pos = (int(e["pos"][0]), int(e["pos"][1]))
+        pos = (src_pos[0] - min_x, src_pos[1] - min_y)
         tile = tile_lookup[idx]
         img = Image.open(src_dir / tile.file).convert("RGBA")
         canvas.paste(img, (pos[0] * tile_size[0], pos[1] * tile_size[1]))
-        placed.append({"index": idx, "pos": [pos[0], pos[1]], "file": e["name"] + ".png"})
+        placed.append(
+            {
+                "index": idx,
+                "pos": [pos[0], pos[1]],
+                "source_pos": [src_pos[0], src_pos[1]],
+                "file": _tile_filename(base_name, src_pos[0], src_pos[1]),
+            }
+        )
 
     out_path.parent.mkdir(parents=True, exist_ok=True)
     canvas.save(out_path)
@@ -163,35 +188,39 @@ def main() -> None:
         "source": os.fspath(config["source_image"]),
         "tile_size": [tile_w, tile_h],
         "directories": {},
-        "groups": [],
         "tiles": {},
     }
 
-    for group in config["groups"]:
-        group_id = str(group["id"])
-        connect = group.get("connect")
-        tiles = group["tiles"]
+    directories = config.get("directories") or config.get("groups") or []
+    for directory in directories:
+        directory_id = str(directory["id"])
+        base_name = _sanitize_base_name(
+            str(directory.get("base_name") or _default_base_name_from_group_id(directory_id))
+        )
+        connect = directory.get("connect")
+        tiles = directory["tiles"]
 
-        group_entry: dict[str, Any] = {"id": group_id, "tiles": []}
+        directory_entry: dict[str, Any] = {"id": directory_id, "base_name": base_name, "tiles": []}
         if connect is not None:
-            group_entry["connect"] = connect
+            directory_entry["connect"] = connect
 
-        group_dir = out_root / group_id
-        group_dir.mkdir(parents=True, exist_ok=True)
+        directory_dir = out_root / directory_id
+        directory_dir.mkdir(parents=True, exist_ok=True)
 
         # Copy tiles and record mapping.
+        if len(tiles) > 1 and any("pos" not in t for t in tiles):
+            raise ValueError(
+                f"Directory {directory_id} has multiple tiles but some are missing pos=[x,y]; "
+                "set pos for every tile so output can be numbered by x/y."
+            )
+        occupied: set[tuple[int, int]] = set()
         for t in tiles:
             idx = int(t["index"])
             used.add(idx)
-            name = str(t["name"])
             local_pos = t.get("pos")
-            dst = group_dir / f"{name}.png"
-            _copy_tile(sliced_dir, tile_lookup[idx], dst)
             tile_info = tile_lookup[idx]
             tile_record: dict[str, Any] = {
                 "index": idx,
-                "name": name,
-                "file": os.fspath(dst.relative_to(out_root)),
                 "sheet_x": tile_info.sheet_x,
                 "sheet_y": tile_info.sheet_y,
             }
@@ -199,49 +228,58 @@ def main() -> None:
                 tile_record["x"] = int(local_pos[0])
                 tile_record["y"] = int(local_pos[1])
             else:
-                tile_record["x"] = tile_info.sheet_x
-                tile_record["y"] = tile_info.sheet_y
+                tile_record["x"] = 0
+                tile_record["y"] = 0
+
+            key = (int(tile_record["x"]), int(tile_record["y"]))
+            if key in occupied:
+                raise ValueError(f"Duplicate local (x,y)={key} in directory {directory_id} (tile index {idx})")
+            occupied.add(key)
+
+            filename = _tile_filename(base_name, int(tile_record["x"]), int(tile_record["y"]))
+            dst = directory_dir / filename
+            _copy_tile(sliced_dir, tile_lookup[idx], dst)
+            tile_record["file"] = os.fspath(dst.relative_to(out_root))
 
             index["tiles"][str(idx)] = {
-                "group": group_id,
-                "name": name,
+                "directory": directory_id,
                 "file": tile_record["file"],
                 "sheet_x": tile_info.sheet_x,
                 "sheet_y": tile_info.sheet_y,
                 "x": tile_record["x"],
                 "y": tile_record["y"],
             }
-            group_entry["tiles"].append(tile_record)
+            directory_entry["tiles"].append(tile_record)
 
-        group_entry["tiles"].sort(key=lambda t: (int(t["y"]), int(t["x"]), int(t["index"])))
+        directory_entry["tiles"].sort(key=lambda t: (int(t["y"]), int(t["x"]), int(t["index"])))
 
         # Connection metadata.
         if connect and connect.get("type") == "layout":
             entries = [t for t in tiles if "pos" in t]
             if entries:
-                assembled_path = group_dir / "assembled.png"
+                assembled_path = directory_dir / "assembled.png"
                 layout = _assemble_layout(
                     src_dir=sliced_dir,
                     tile_lookup=tile_lookup,
                     tile_size=(tile_w, tile_h),
+                    base_name=base_name,
                     entries=entries,
                     out_path=assembled_path,
                 )
-                group_entry["layout"] = layout
-                group_entry["assembled"] = os.fspath(assembled_path.relative_to(out_root))
+                directory_entry["layout"] = layout
+                directory_entry["assembled"] = os.fspath(assembled_path.relative_to(out_root))
 
         if connect and connect.get("type") == "edge_match":
             indexes = [int(t["index"]) for t in tiles]
             top_k = int(connect.get("top_k", 5))
-            group_entry["edge_matches"] = _edge_match_connections(
+            directory_entry["edge_matches"] = _edge_match_connections(
                 src_dir=sliced_dir,
                 tile_lookup=tile_lookup,
                 indexes=indexes,
                 top_k=top_k,
             )
 
-        index["directories"][group_id] = group_entry
-        index["groups"].append(group_entry)
+        index["directories"][directory_id] = directory_entry
 
     missing = sorted(set(tile_lookup.keys()) - used)
     if missing:

@@ -27,9 +27,10 @@ This produces:
 
 3) Create a grouping/naming config (manual step).
    - `configs/tileset_1bit_16x16.json` defines:
-     - semantic groups (`terrain/...`, `objects/...`, etc.)
-     - tile names within each group
-     - how tiles “connect” within the group
+     - directories (each directory = one object/set, like `objects/archway`)
+     - a `base_name` used for filenames
+     - per-tile local `pos: [x,y]` so files are numbered as `<base_name>_XX_YY.png`
+     - how tiles “connect” within the directory
 
 4) Generate an organized folder tree and connection metadata:
 
@@ -38,9 +39,9 @@ python3 scripts/organize_tileset.py --config configs/tileset_1bit_16x16.json --o
 ```
 
 This produces:
-- grouped/named PNGs under `organized_tilesets/tileset_1bit_16x16/<group>/...`
+- grouped/named PNGs under `organized_tilesets/tileset_1bit_16x16/<directory>/...`
 - `organized_tilesets/tileset_1bit_16x16/tileset.json`
-- `assembled.png` previews for `connect.type = "layout"` groups
+- `assembled.png` previews for `connect.type = "layout"` directories
 
 ## How an agent should do this for a new tileset
 
@@ -68,7 +69,7 @@ If the tileset uses white as “transparent background”, consider:
 - `--transparent-white` (turns pure white into alpha=0)
 - `--trim-empty` (skips fully empty tiles)
 
-### 4) Inspect slices and decide semantic groups
+### 4) Inspect slices and decide semantic directories
 
 Goal: produce stable, human-meaningful names and group IDs.
 
